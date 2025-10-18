@@ -27,10 +27,12 @@ repositories {
 dependencies {
     compileOnly(libs.org.spigotmc.spigot.api)
     compileOnly(libs.com.mojang.authlib)
+    compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.14.0")
 }
 
 group = "Achoowy"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 description = "Cameras"
 java.sourceCompatibility = JavaVersion.VERSION_1_9
 

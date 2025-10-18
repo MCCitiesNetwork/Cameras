@@ -4,4 +4,4 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
-rootProject.name = "CameraPlugin"
+rootProject.name = "Cameras"

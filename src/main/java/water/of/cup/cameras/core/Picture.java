@@ -1,7 +1,7 @@
-package main.java.water.of.cup.cameras;
+package main.java.water.of.cup.cameras.core;
 
+import main.java.water.of.cup.cameras.utils.MiniMessageUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -10,15 +10,13 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
 public class Picture {
     private static HashMap<Player, Long> delayMap = new HashMap<>();
 
     public static boolean takePicture(Player p) {
         Camera instance = Camera.getInstance();
-        boolean messages = instance.getConfig().getBoolean("settings.messages.enabled");
-        if (instance.getResourcePackManager().isLoaded()) {
+        if (instance.getResourcePackManager().areTexturesReady()) {
             if (instance.getConfig().getBoolean("settings.delay.enabled")) {
                 if (!delayMap.containsKey(p)) {
                     delayMap.put(p, System.currentTimeMillis());
@@ -27,16 +25,18 @@ public class Picture {
                     if (System.currentTimeMillis() - delayMap.get(p) >= delay) {
                         delayMap.put(p, System.currentTimeMillis());
                     } else {
-                        if (messages) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.getConfig().getString("settings.messages.delay")));
-                        }
+                        String message = instance.getConfig().getString("settings.messages.delay");
+                        MiniMessageUtils.sendMessage(p, message);
                         return false;
                     }
                 }
             }
         } else {
-            if (messages) {
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.getConfig().getString("settings.messages.notready")));
+            if (instance.getResourcePackManager().isLoaded()) {
+                MiniMessageUtils.sendMessage(p, "<red>Camera textures are still loading, please wait...");
+            } else {
+                String message = instance.getConfig().getString("settings.messages.notready");
+                MiniMessageUtils.sendMessage(p, message);
             }
             return false;
         }
@@ -50,12 +50,16 @@ public class Picture {
         for (MapRenderer renderer : mapView.getRenderers())
             mapView.removeRenderer(renderer);
 
-        Renderer customRenderer = new Renderer();
+        main.java.water.of.cup.cameras.rendering.Renderer customRenderer = new main.java.water.of.cup.cameras.rendering.Renderer();
         mapView.addRenderer(customRenderer);
         mapMeta.setMapView(mapView);
 
         itemStack.setItemMeta(mapMeta);
         p.getInventory().addItem(itemStack);
+
+        // Send success message
+        String successMessage = instance.getConfig().getString("settings.messages.success");
+        MiniMessageUtils.sendMessage(p, successMessage);
 
         return true;
     }

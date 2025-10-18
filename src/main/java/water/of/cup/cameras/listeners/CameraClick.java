@@ -1,8 +1,9 @@
 package main.java.water.of.cup.cameras.listeners;
 
-import main.java.water.of.cup.cameras.Camera;
-import main.java.water.of.cup.cameras.Picture;
-import org.bukkit.ChatColor;
+import main.java.water.of.cup.cameras.core.Camera;
+import main.java.water.of.cup.cameras.core.CameraUtils;
+import main.java.water.of.cup.cameras.utils.MiniMessageUtils;
+import main.java.water.of.cup.cameras.core.Picture;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,16 +29,14 @@ public class CameraClick implements Listener {
             return;
 
         if ((e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
-                && e.getItem().getItemMeta().getDisplayName().equals(ChatColor.DARK_BLUE + "Camera")) {
+                && CameraUtils.isCamera(e.getItem())) {
 
             boolean usePerms = instance.getConfig().getBoolean("settings.camera.permissions");
             if (usePerms && !p.hasPermission("cameras.useitem")) return;
 
-            boolean messages = instance.getConfig().getBoolean("settings.messages.enabled");
             if (p.getInventory().firstEmpty() == -1) { //check to make sure there is room in the inventory for the map
-                if (messages) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.getConfig().getString("settings.messages.invfull")));
-                }
+                String message = instance.getConfig().getString("settings.messages.invfull");
+                MiniMessageUtils.sendMessage(p, message);
                 return;
             }
             if (p.getInventory().contains(Material.PAPER)) { //check to make sure the player has paper
@@ -52,9 +51,8 @@ public class CameraClick implements Listener {
                     }
                 }
             } else {
-                if (messages) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.getConfig().getString("settings.messages.nopaper")));
-                }
+                String message = instance.getConfig().getString("settings.messages.nopaper");
+                MiniMessageUtils.sendMessage(p, message);
             }
 
         }

@@ -1,6 +1,6 @@
 package main.java.water.of.cup.cameras.listeners;
 
-import org.bukkit.ChatColor;
+import main.java.water.of.cup.cameras.core.CameraUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -12,8 +12,7 @@ public class CameraPlace implements Listener {
         //Prevent players from placing Cameras
 
         ItemStack item = e.getItemInHand();
-        if (!item.hasItemMeta()) return;
-        if (item.getItemMeta().getDisplayName().equals(ChatColor.DARK_BLUE + "Camera")) {
+        if (CameraUtils.isCamera(item)) {
             e.setCancelled(true);
         }
     }

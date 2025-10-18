@@ -1,5 +1,6 @@
-package main.java.water.of.cup.cameras;
+package main.java.water.of.cup.cameras.utils;
 
+import main.java.water.of.cup.cameras.core.Camera;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

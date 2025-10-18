@@ -2,26 +2,18 @@ settings:
   camera:
     shadows: true
     permissions: true
-    recipe:
-      ingredients:
-        I: IRON_INGOT
-        G: GLASS_PANE
-        T: GLOWSTONE_DUST
-        R: REDSTONE
-      shape:
-        - IGI
-        - ITI
-        - IRI
-      enabled: false
+    pdc:
+      # PDC tag to mark items as cameras (can be any string)
+      tag: "camera"
     transparentWater: true
     #disabling async may cause minor lag spikes. enabling async will cause slower rendering, but won't affect server performance
-    renderAsync: false
+    renderAsync: true
   messages:
-    notready: '&cCameras is still loading, please wait.'
-    invfull: '&cYou can not take a picture with a full inventory.'
-    delay: '&cPlease wait before taking another picture.'
-    nopaper: '&cYou must have paper in order to take a picture.'
-    enabled: true
+    notready: '<red>Cameras is still loading, please wait.'
+    invfull: '<red>You can not take a picture with a full inventory.'
+    delay: '<red>Please wait before taking another picture.'
+    nopaper: '<red>You must have paper in order to take a picture.'
+    success: '<green>Picture taken successfully!'
   delay:
     amount: 1000
     enabled: true

@@ -1,5 +1,8 @@
-package main.java.water.of.cup.cameras;
+package main.java.water.of.cup.cameras.rendering;
 
+import main.java.water.of.cup.cameras.core.Camera;
+import main.java.water.of.cup.cameras.storage.MapStorage;
+import main.java.water.of.cup.cameras.utils.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
